@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { debounce } from "lodash";
 export default {
   name: "UsernameTextbox",
   computed: {
@@ -22,16 +22,14 @@ export default {
       },
       set(value) {
         this.$store.commit("repository/setUsername", value);
-      }
-    }
+      },
+    },
   },
   methods: {
-    // fetchRepositories() {
-    //   console.log("fetch repo init");
-    //   this.$store.dispatch("repository/fetchRepositories");
-    // },
-    ...mapActions("repository", ["fetchRepositories"])
-  }
+    fetchRepositories: debounce(function fetchRepo() {
+      this.$store.dispatch("repository/fetchRepositories");
+    }, 300),
+  },
 };
 </script>
 
