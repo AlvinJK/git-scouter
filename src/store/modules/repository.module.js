@@ -52,17 +52,21 @@ const actions = {
   async fetchReadme({ commit, getters }, payload) {
     const { repo } = payload;
     try {
-      commit("setFetching", false);
+      commit("setFetching", true);
       commit("setActiveReadme", "");
       const username = getters.getUsername;
       const response = await getRepositoryReadme(username, repo);
       console.log(response.data);
-      // response.data.encoding
+
       commit("setActiveReadme", marked(atob(response.data.content)));
       commit("setFetching", false);
     } catch (error) {
-      // handle the error here
       commit("setFetching", false);
+      if (error.response.status === "404") {
+        commit("setActiveReadme", "Repository Not Found or is Private");
+      } else {
+        commit("setActiveReadme", "Unknown error");
+      }
       console.log(error);
     }
   },

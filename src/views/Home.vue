@@ -14,8 +14,8 @@ export default {
   name: "Home",
   components: {
     UsernameTextbox,
-    RepositoryList
-  }
+    RepositoryList,
+  },
 };
 </script>
 
@@ -23,7 +23,7 @@ export default {
 .home {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  flex: 1;
 }
 </style>

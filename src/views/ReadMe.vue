@@ -6,6 +6,7 @@
       </div>
       <div v-else v-html="activeReadme"></div>
     </div>
+    <router-link to="/" class="back-button">Back to Home</router-link>
   </div>
 </template>
 
@@ -22,10 +23,6 @@ export default {
     }),
   },
   methods: {
-    // fetchRepositories() {
-    //   console.log("fetch repo init");
-    //   this.$store.dispatch("repository/fetchRepositories");
-    // },
     ...mapActions("repository", ["fetchReadme", "changeUsername"]),
   },
 
@@ -44,7 +41,6 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 100vw;
 }
@@ -53,5 +49,19 @@ export default {
   width: 100%;
   border: solid 2px #000;
   border-radius: 1rem;
+  padding: 20px;
+  margin: 20px 0;
+  max-height: 500px;
+  overflow: auto;
+}
+.back-button {
+  padding: 20px;
+  border-radius: 1rem;
+  border: solid 1px #2196f3;
+  background-color: #2196f3;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
 }
 </style>
