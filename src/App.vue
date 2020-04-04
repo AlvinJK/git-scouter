@@ -6,6 +6,10 @@
 </template>
 
 <style>
+html,
+body {
+  height: 100vh;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -15,10 +19,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-}
-html,
-body {
   height: 100vh;
 }
 </style>

@@ -5,7 +5,8 @@ import {
 } from "@/apis/repository.api";
 
 const state = {
-  username: "alvinJK",
+  username: "",
+  userError: "",
   isFetching: false,
   repositoryList: [],
   activeReadme: "",
@@ -24,6 +25,9 @@ const getters = {
   getIsFetching(state) {
     return state.isFetching;
   },
+  getUserError(state) {
+    return state.userError;
+  },
 };
 
 const actions = {
@@ -33,6 +37,7 @@ const actions = {
   async fetchRepositories({ commit, getters }) {
     try {
       commit("setRepositories", []);
+      commit("setUserError", "");
       commit("setFetching", true);
       const response = await getUserRepositories(getters.getUsername);
       console.log(response);
@@ -46,6 +51,11 @@ const actions = {
     } catch (error) {
       // handle the error here
       commit("setFetching", false);
+      if (error.response.status === 404) {
+        commit("setUserError", "User Not Found");
+      } else {
+        commit("setUserError", "Unknown error");
+      }
       console.log(error);
     }
   },
@@ -62,7 +72,7 @@ const actions = {
       commit("setFetching", false);
     } catch (error) {
       commit("setFetching", false);
-      if (error.response.status === "404") {
+      if (error.response.status === 404) {
         commit("setActiveReadme", "Repository Not Found or is Private");
       } else {
         commit("setActiveReadme", "Unknown error");
@@ -75,6 +85,9 @@ const actions = {
 const mutations = {
   setUsername(state, newName) {
     state.username = newName;
+  },
+  setUserError(state, errorMessage) {
+    state.userError = errorMessage;
   },
   setRepositories(state, repos) {
     state.repositoryList = repos;

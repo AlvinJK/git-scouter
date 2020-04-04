@@ -1,12 +1,15 @@
 <template>
   <div class="home">
     <UsernameTextbox />
-    <RepositoryList />
+    <div v-if="userError">
+      {{ userError }}
+    </div>
+    <RepositoryList v-else />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapGetters } from "vuex";
 import UsernameTextbox from "@/components/UsernameTextbox.vue";
 import RepositoryList from "@/components/RepositoryList.vue";
 
@@ -15,6 +18,11 @@ export default {
   components: {
     UsernameTextbox,
     RepositoryList,
+  },
+  computed: {
+    ...mapGetters({
+      userError: "repository/getUserError",
+    }),
   },
 };
 </script>
