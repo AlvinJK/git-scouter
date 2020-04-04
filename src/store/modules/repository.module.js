@@ -1,3 +1,4 @@
+import marked from "marked";
 import {
   getUserRepositories,
   getRepositoryReadme,
@@ -51,12 +52,18 @@ const actions = {
   async fetchReadme({ commit, getters }, payload) {
     const { repo } = payload;
     try {
+      commit("setFetching", false);
+      commit("setActiveReadme", "");
       const username = getters.getUsername;
       const response = await getRepositoryReadme(username, repo);
+      console.log(response.data);
       // response.data.encoding
-      commit("setActiveReadme", atob(response.data.content));
+      commit("setActiveReadme", marked(atob(response.data.content)));
+      commit("setFetching", false);
     } catch (error) {
       // handle the error here
+      commit("setFetching", false);
+      console.log(error);
     }
   },
 };
