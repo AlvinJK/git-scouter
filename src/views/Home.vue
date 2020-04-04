@@ -1,18 +1,36 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <UsernameTextbox />
+    <div v-if="userError">
+      {{ userError }}
+    </div>
+    <RepositoryList v-else />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mapGetters } from "vuex";
+import { UsernameTextbox, RepositoryList } from "@/components";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    UsernameTextbox,
+    RepositoryList,
+  },
+  computed: {
+    ...mapGetters({
+      userError: "repository/getUserError",
+    }),
+  },
+};
 </script>
+
+<style>
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+</style>
