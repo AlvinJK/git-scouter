@@ -10,8 +10,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import UsernameTextbox from "@/components/UsernameTextbox.vue";
-import RepositoryList from "@/components/RepositoryList.vue";
+import { UsernameTextbox, RepositoryList } from "@/components";
 
 export default {
   name: "Home",
