@@ -4,32 +4,6 @@ import {
   getRepositoryReadme
 } from "@/apis/repository.api";
 
-const state = {
-  username: "",
-  userError: "",
-  isFetching: false,
-  repositoryList: [],
-  activeReadme: ""
-};
-
-const getters = {
-  getUsername(state) {
-    return state.username;
-  },
-  getRepositories(state) {
-    return state.repositoryList;
-  },
-  getActiveReadme(state) {
-    return state.activeReadme;
-  },
-  getIsFetching(state) {
-    return state.isFetching;
-  },
-  getUserError(state) {
-    return state.userError;
-  }
-};
-
 const actions = {
   async changeUsername({ commit }, payload) {
     commit("setUsername", payload);
@@ -76,29 +50,4 @@ const actions = {
     }
   }
 };
-
-const mutations = {
-  setUsername(state, newName) {
-    state.username = newName;
-  },
-  setUserError(state, errorMessage) {
-    state.userError = errorMessage;
-  },
-  setRepositories(state, repos) {
-    state.repositoryList = repos;
-  },
-  setActiveReadme(state, readme) {
-    state.activeReadme = readme;
-  },
-  setFetching(state, status) {
-    state.isFetching = status;
-  }
-};
-
-export default {
-  namespaced: true,
-  state,
-  getters,
-  actions,
-  mutations
-};
+export default actions;

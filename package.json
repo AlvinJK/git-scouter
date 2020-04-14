@@ -1,7 +1,9 @@
 {
   "name": "git-scouter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
+  "repository": "https://github.com/alvinjk/git-scouter",
+  "author": "alvinJK",
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
