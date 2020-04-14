@@ -1,34 +1,8 @@
 import marked from "marked";
 import {
   getUserRepositories,
-  getRepositoryReadme,
+  getRepositoryReadme
 } from "@/apis/repository.api";
-
-const state = {
-  username: "",
-  userError: "",
-  isFetching: false,
-  repositoryList: [],
-  activeReadme: "",
-};
-
-const getters = {
-  getUsername(state) {
-    return state.username;
-  },
-  getRepositories(state) {
-    return state.repositoryList;
-  },
-  getActiveReadme(state) {
-    return state.activeReadme;
-  },
-  getIsFetching(state) {
-    return state.isFetching;
-  },
-  getUserError(state) {
-    return state.userError;
-  },
-};
 
 const actions = {
   async changeUsername({ commit }, payload) {
@@ -40,12 +14,10 @@ const actions = {
       commit("setUserError", "");
       commit("setFetching", true);
       const response = await getUserRepositories(getters.getUsername);
-      console.log(response);
-      const repoList = response.data.map((repo) => {
+      const repoList = response.data.map(repo => {
         const { id, name } = repo;
         return { id, name };
       });
-      console.log(repoList);
       commit("setFetching", false);
       commit("setRepositories", repoList);
     } catch (error) {
@@ -56,7 +28,6 @@ const actions = {
       } else {
         commit("setUserError", "Unknown error");
       }
-      console.log(error);
     }
   },
   async fetchReadme({ commit, getters }, payload) {
@@ -66,7 +37,6 @@ const actions = {
       commit("setActiveReadme", "");
       const username = getters.getUsername;
       const response = await getRepositoryReadme(username, repo);
-      console.log(response.data);
 
       commit("setActiveReadme", marked(atob(response.data.content)));
       commit("setFetching", false);
@@ -77,33 +47,7 @@ const actions = {
       } else {
         commit("setActiveReadme", "Unknown error");
       }
-      console.log(error);
     }
-  },
+  }
 };
-
-const mutations = {
-  setUsername(state, newName) {
-    state.username = newName;
-  },
-  setUserError(state, errorMessage) {
-    state.userError = errorMessage;
-  },
-  setRepositories(state, repos) {
-    state.repositoryList = repos;
-  },
-  setActiveReadme(state, readme) {
-    state.activeReadme = readme;
-  },
-  setFetching(state, status) {
-    state.isFetching = status;
-  },
-};
-
-export default {
-  namespaced: true,
-  state,
-  getters,
-  actions,
-  mutations,
-};
+export default actions;
