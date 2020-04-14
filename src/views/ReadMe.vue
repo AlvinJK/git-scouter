@@ -1,9 +1,7 @@
 <template>
   <div class="container">
     <div class="readme">
-      <div v-if="isFetching">
-        Loading
-      </div>
+      <div v-if="isFetching">Loading</div>
       <div v-else v-html="activeReadme"></div>
     </div>
     <router-link to="/" class="back-button">Back to Home</router-link>
@@ -19,21 +17,19 @@ export default {
     ...mapGetters({
       username: "repository/getUsername",
       activeReadme: "repository/getActiveReadme",
-      isFetching: "repository/getIsFetching",
-    }),
+      isFetching: "repository/getIsFetching"
+    })
   },
   methods: {
-    ...mapActions("repository", ["fetchReadme", "changeUsername"]),
+    ...mapActions("repository", ["fetchReadme", "changeUsername"])
   },
 
   async created() {
-    console.log(this.username, this.$route.params.username);
     if (this.username !== this.$route.params.username) {
       await this.changeUsername(this.$route.params.username);
     }
-    console.log("fetch!!!");
     this.fetchReadme({ repo: this.$route.params.repoName });
-  },
+  }
 };
 </script>
 

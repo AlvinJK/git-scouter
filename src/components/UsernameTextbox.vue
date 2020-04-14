@@ -2,34 +2,35 @@
   <div class="username-container">
     <span class="username-label">Input github username below</span>
     <span class="small-note-text">*Only works for public repos</span>
-    <input
-      type="text"
-      class="username-text-input"
-      v-model="username"
-      @input="this.fetchRepositories"
-    />
+    <input type="text" class="username-text-input" v-model="username" @input="this.initFetchRepo" />
   </div>
 </template>
 
 <script>
 import { debounce } from "lodash";
+import { mapActions } from "vuex";
 export default {
   name: "UsernameTextbox",
   computed: {
     username: {
       get() {
-        return this.$store.state.repository.username;
+        return this.getUsername();
       },
       set(value) {
-        this.$store.commit("repository/setUsername", value);
-      },
-    },
+        this.changeUsername(value);
+      }
+    }
   },
   methods: {
-    fetchRepositories: debounce(function fetchRepo() {
-      this.$store.dispatch("repository/fetchRepositories");
-    }, 300),
-  },
+    ...mapActions("repository", [
+      "fetchRepositories",
+      "getUsername",
+      "changeUsername"
+    ]),
+    initFetchRepo: debounce(function fetchRepo() {
+      this.fetchRepositories();
+    }, 300)
+  }
 };
 </script>
 

@@ -1,15 +1,8 @@
 <template>
   <div class="repository-container">
     <div v-if="isFetching">Loading</div>
-    <div
-      v-else
-      v-bind:key="repo.id"
-      v-for="repo in repositoryList"
-      class="repo-link-container"
-    >
-      <router-link :to="getRouteLink(repo.name)" class="repo-link">
-        {{ repo.name }}
-      </router-link>
+    <div v-else v-bind:key="repo.id" v-for="repo in repositoryList" class="repo-link-container">
+      <router-link :to="getRouteLink(repo.name)" class="repo-link">{{ repo.name }}</router-link>
     </div>
   </div>
 </template>
@@ -22,14 +15,14 @@ export default {
     ...mapGetters({
       repositoryList: "repository/getRepositories",
       isFetching: "repository/getIsFetching",
-      username: "repository/getUsername",
-    }),
+      username: "repository/getUsername"
+    })
   },
   methods: {
     getRouteLink(repoName) {
-      return `/readme/${this.$store.state.repository.username}/${repoName}`;
-    },
-  },
+      return `/readme/${this.username}/${repoName}`;
+    }
+  }
 };
 </script>
 
